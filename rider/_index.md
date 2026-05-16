@@ -27,6 +27,9 @@ get_project_dependencies — list NuGet/package dependencies
 get_repositories         — list VCS repositories in the solution
 get_run_configurations   — list run/debug configurations
 
+## Directory
+list_directory_tree      — tree listing of a project directory (like `tree`)
+
 ## Editor control
 open_file_in_editor      — open a file in the Rider editor
 create_new_file          — create a new file in the project

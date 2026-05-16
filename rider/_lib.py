@@ -14,10 +14,10 @@ def _load_config():
         return json.load(f)
 
 
-def _post(url, payload):
+def _post(url, payload, timeout=10):
     data = json.dumps(payload).encode()
     req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=10) as resp:
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
         resp.read()
 
 
@@ -101,9 +101,9 @@ def command(tool, params, timeout=15):
         # initialized notification (no response expected)
         _post(url, {"jsonrpc": "2.0", "method": "notifications/initialized"})
 
-        # tool call
+        # tool call — use same timeout for POST in case Rider blocks before sending 202
         _post(url, {"jsonrpc": "2.0", "id": 2, "method": "tools/call",
-                    "params": {"name": tool, "arguments": params}})
+                    "params": {"name": tool, "arguments": params}}, timeout=timeout)
         resp = result_q.get(timeout=timeout)
 
         if resp is None or "error" in resp:
