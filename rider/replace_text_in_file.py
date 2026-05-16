@@ -1,6 +1,4 @@
-import sys
-import json
-import os
+import sys, os
 sys.path.insert(0, os.path.dirname(__file__))
 from _lib import command, require
 
@@ -13,7 +11,14 @@ def main():
         "replaceAll": True,
     }
     if len(sys.argv) > 4: params["projectPath"] = sys.argv[4]
-    print(json.dumps(command("replace_text_in_file", params), indent=2))
+    d = command("replace_text_in_file", params)
+    if isinstance(d, dict):
+        count = d.get("replacements", d.get("replacedCount", d.get("usagesCount", "")))
+        print(f"replaced" + (f" {count} occurrences" if count else ""))
+    elif isinstance(d, str):
+        print(d if d.strip() else "ok")
+    else:
+        print("ok")
 
 if __name__ == "__main__":
     main()
