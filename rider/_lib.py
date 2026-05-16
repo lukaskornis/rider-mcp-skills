@@ -37,7 +37,7 @@ def require(n, usage):
         sys.exit(1)
 
 
-def command(tool, params):
+def command(tool, params, timeout=15):
     config = _load_config()
     base = config["rider_mcp_url"]
 
@@ -104,7 +104,7 @@ def command(tool, params):
         # tool call
         _post(url, {"jsonrpc": "2.0", "id": 2, "method": "tools/call",
                     "params": {"name": tool, "arguments": params}})
-        resp = result_q.get(timeout=15)
+        resp = result_q.get(timeout=timeout)
 
         if resp is None or "error" in resp:
             msg = (resp or {}).get("error", {}).get("message", "Unknown error")

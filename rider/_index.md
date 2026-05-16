@@ -8,7 +8,7 @@ replace_text_in_file     — replace text or regex match in a file
 reformat_file            — reformat (auto-indent) a file
 
 ## Search
-search_file              — search for a symbol/text in a specific file
+search_file              — find files matching a glob pattern (quick, indexed)
 search_text              — search text across the entire project
 search_in_files_by_text  — find files containing a text string
 search_in_files_by_regex — find files matching a regex
